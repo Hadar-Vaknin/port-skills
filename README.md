@@ -6,10 +6,31 @@
 
 # Port Agent Skills
 
-Curated [Agent Skills](https://agentskills.io/specification) for working with
-[Port](https://www.port.io) from your coding agent, Claude Code, Cursor, Codex
-CLI, GitHub Copilot, and others. Point your agent at one of these and ask it
-to build the thing: a blueprint, a mapping, a workflow, a dashboard, a plugin.
+Give your coding agent the skills of a platform engineer to help build your
+agentic SDLC platform. These skills cut the time it takes to model your
+infrastructure, build workflows, and govern access in Port, and make your
+coding agent smarter about your organization.
+
+Point your agent at [Port](https://www.port.io) and ask it to build the
+thing. Some examples:
+
+- **Model your engineering knowledge** — turn your services, environments,
+  and teams into a connected context lake your agent and your whole org can
+  query. (`port-blueprints`, `port-context-lake`)
+- **Automate the busywork around shipping software** — self-service
+  requests, approvals, and automated reactions to what happens in your
+  catalog, instead of chasing people in Slack. (`port-workflows`)
+- **Give every team visibility and control** — dashboards that show what's
+  actually happening, without a spreadsheet. (`port-dashboards`)
+- **Govern who can see and do what** — RBAC across your catalog and pages,
+  defined once. (`port-permissions`)
+- **Keep your catalog in sync with the tools you already use** — configure
+  and troubleshoot how data flows in. (`port-integrations`)
+- **Manage your whole Port setup as code** — version-controlled,
+  repeatable, reviewable. (`port-terraform`)
+
+New to Port? Start with `port-getting-started` to connect your agent to
+Port's MCP server first.
 
 ## Skills
 
