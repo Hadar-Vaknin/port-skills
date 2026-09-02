@@ -1,6 +1,6 @@
 ---
-name: port-brainstorming
-description: "Discovers and loads Port organizational skills before creative engineering work. Use before implementing, building, designing, scaffolding, creating features, plugins, dashboards, workflows, integrations, migrations, or multi-file changes — and whenever the user says build, implement, create, design, scaffold, add, refactor, or starts substantive work without a loaded domain skill. Searches the load_skill catalog and org skill entities via MCP, then loads matches. Skip only for pure explanations, trivial one-line fixes, or when the user explicitly says to skip skill discovery."
+name: port-find-skills
+description: "Searches for and loads Port skills before any Port MCP tool call. Use at the start of every Port MCP session or task — before list_blueprints, list_entities, upsert_*, run_action, search_port_knowledge_sources, or any other Port MCP tool. Scans the load_skill catalog and org skill entities via MCP, then loads matches. Skip only when the user explicitly says to skip skill discovery or when only load_skill / skill-catalog discovery tools are needed."
 license: MIT
 compatibility: "Claude Code, Cursor, Codex CLI, GitHub Copilot, VS Code"
 metadata:
@@ -8,25 +8,25 @@ metadata:
   author: port-labs
   repository: https://github.com/port-labs/port-skills
   tags: port,skills,discovery,mcp,onboarding
-  summary: Discover and load Port skills before creative work
+  summary: Find and load Port skills before any MCP tool call
 ---
 
-# Brainstorming
+# Find skills
 
-Port is the org's context lake — skills, workflows, and platform knowledge live there. Before creative work, discover what already exists. Do not write code, JSON, configs, or architecture until skill discovery completes.
+Port skills encode org-specific workflows and platform knowledge. Before calling **any** Port MCP tool, find and load the relevant skill(s). Do not call Port MCP tools until skill discovery completes.
 
-**Creative work** = implementing, building, designing, scaffolding, new features, plugins, dashboards, workflows, integrations, migrations, or multi-file changes.
+**Exception:** `load_skill` and skill-catalog discovery (`list_blueprints`, `list_entities` on the skill catalog blueprint) may run during discovery itself.
 
-**Skip** when the user only wants an explanation, a trivial one-line fix, or explicitly says to skip skill discovery.
+**Skip** when the user explicitly says to skip skill discovery.
 
 ## Workflow
 
 ```text
 Task Progress:
-- [ ] Step 1: Port MCP — search the skill catalog
-- [ ] Step 2: Match task to available skills
+- [ ] Step 1: Search the skill catalog
+- [ ] Step 2: Match the task to available skills
 - [ ] Step 3: Load relevant skills
-- [ ] Step 4: Proceed with creative work
+- [ ] Step 4: Proceed with Port MCP tool calls
 ```
 
 ### Step 1 — Search the skill catalog
@@ -41,14 +41,12 @@ Task Progress:
 
 Merge both sources; either can surface a match the other misses.
 
-If the task touches Port platform behavior (blueprints, integrations, permissions, dashboards, workflows), also run `search_port_knowledge_sources` with a focused query.
-
 ### Step 2 — Match
 
 Compare the user's request against skill identifiers, titles, and descriptions. Look for:
 
 - Domain keywords (integration name, product area, blueprint type)
-- Task verbs (create, troubleshoot, configure, scaffold)
+- Task verbs (create, troubleshoot, configure, scaffold, list, search)
 - Overlapping scope (e.g. "dashboard widget" → dashboard or plugin skills)
 
 Pick the **most specific** match(es). When unsure between two, load both only if they add non-overlapping guidance.
@@ -71,7 +69,7 @@ Also check local project skills when relevant — read `.cursor/skills/<name>/SK
 
 ### Step 4 — Proceed
 
-One short line on which skills loaded and why, then execute. Loaded skill instructions override generic habits when they conflict.
+One short line on which skills loaded and why, then call Port MCP tools. Loaded skill instructions override generic habits when they conflict.
 
 ## Tools reference
 
@@ -87,5 +85,5 @@ One short line on which skills loaded and why, then execute. Loaded skill instru
 - Skill discovery is **silent and fast** — no long preamble; one line after loading is enough.
 - Never assume the skill blueprint identifier — discover it via `list_blueprints` when entity lookup is needed.
 - Never assume no skill exists without completing Step 1.
+- Never call Port MCP tools before completing skill discovery (except discovery tools listed above).
 - If Port MCP is unavailable, note the gap and check local `.cursor/skills/` or `.claude/skills/` before proceeding.
-- This skill gates **discovery only**; it does not dictate execution style beyond requiring loaded skills to be followed.

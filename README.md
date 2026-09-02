@@ -38,9 +38,9 @@ Port's MCP server first.
 | Skill | What it does |
 |---|---|
 | [`port-blueprints`](skills/port-blueprints/SKILL.md) | Model your context lake with Port blueprints, properties, and relations. |
-| [`port-brainstorming`](skills/port-brainstorming/SKILL.md) | Discover and load Port skills before creative work. |
 | [`port-context-lake`](skills/port-context-lake/SKILL.md) | Design a Port context lake with connected blueprints and semantic relations. |
 | [`port-dashboards`](skills/port-dashboards/SKILL.md) | Build Port dashboard pages with widgets, layout, and permissions. |
+| [`port-find-skills`](skills/port-find-skills/SKILL.md) | Find and load Port skills before any MCP tool call. |
 | [`port-getting-started`](skills/port-getting-started/SKILL.md) | Sign up for Port and connect its MCP server to your coding agent. |
 | [`port-integrations`](skills/port-integrations/SKILL.md) | Configure and troubleshoot Port integration mapping. |
 | [`port-permissions`](skills/port-permissions/SKILL.md) | Configure Port's RBAC across the context lake and pages. |
