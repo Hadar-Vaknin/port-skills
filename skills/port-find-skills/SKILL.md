@@ -1,6 +1,6 @@
 ---
 name: port-find-skills
-description: "Search for and load Port skills before calling any Port MCP tool. Use at the start of Port work — before list_blueprints, list_entities, upsert_*, run_action, search_port_knowledge_sources, or any other Port MCP tool. Check the load_skill catalog first; for org-specific skills not listed there, discover the org's skill catalog blueprint and list its entities. Skip only when the user explicitly says to skip skill discovery."
+description: "Before any Port MCP tool call, find and load skills that match the user's prompt. Use whenever Port MCP will be used. Always inspect the load_skill tool description AND list the org skill catalog via list_blueprints + list_entities, then load matching skills with load_skill. Do not skip catalog lookup. Skip only when the user explicitly says to skip skill discovery."
 license: MIT
 compatibility: "Claude Code, Cursor, Codex CLI, GitHub Copilot, VS Code"
 metadata:
@@ -13,27 +13,25 @@ metadata:
 
 # Find skills
 
-Skills provide step-by-step guidance for specialized Port tasks. Before calling any Port MCP tool, search for and load the relevant skill. Follow loaded skill instructions over generic habits.
+Before any Port MCP tool call, find skills that match the user's prompt and load them with `load_skill`. Follow loaded skill instructions over generic habits.
 
-`load_skill` and skill-catalog discovery (`list_blueprints`, then `list_entities` on the skill catalog blueprint) may run during this search. Skip only when the user explicitly says to skip skill discovery.
+The only Port MCP tools allowed before that load are the ones in this skill: reading the `load_skill` description, `list_blueprints`, `list_entities` on the skill catalog blueprint, and `load_skill` itself.
 
-## 1. Search for the relevant skill
+## Always do both
 
-1. Check the `load_skill` tool description — it lists available skills with trigger guidance.
-2. For org-specific skills not listed there, use `list_blueprints` to find your organization's skill catalog blueprint, then `list_entities` on that blueprint.
+1. **`load_skill` tool description** — it lists available skills with trigger guidance. Match those against the prompt.
+2. **Skill catalog** — `list_blueprints` to find the organization's skill catalog blueprint, then `list_entities` on that blueprint. Match those against the prompt too.
 
-When listing blueprints, pick the catalog whose identifier or title indicates skills. Exclude supporting blueprints (`*_file`, `*_version`, `*_group`). If several candidates remain, fetch their schemas with `list_blueprints({ identifiers: [...] })`.
+Do not treat the catalog as a fallback. Skills can exist in either place; miss one and you may skip a skill the prompt needs.
 
-## 2. Load it
+The catalog blueprint varies by org. Choose the blueprint whose identifier or title indicates skills. Skip supporting blueprints (`*_file`, `*_version`, `*_group`).
+
+## Load matches
+
+For each skill that fits the prompt:
 
 ```json
 load_skill({ name: "<skill-name>" })
 ```
 
-Load referenced resources when the skill points to them:
-
-```json
-load_skill({ name: "<skill-name>", resource: "references/REFERENCE.md" })
-```
-
-Then call other Port MCP tools. Loaded skill instructions override generic habits when they conflict.
+Then make other Port MCP tool calls.
