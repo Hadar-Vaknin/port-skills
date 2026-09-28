@@ -18,8 +18,8 @@ integration: validate credentials, check API access, or confirm the integration
 can reach its data source.
 
 This is **not** for mapping validation (`test_integration_mapping`) or general
-sync troubleshooting. Load [`port-integrations`](../port-integrations/SKILL.md)
-for mapping and sync issues.
+sync troubleshooting. Load [`port-integrations`](../SKILL.md) for mapping and
+sync issues.
 
 Requires Port's [MCP server](https://docs.port.io/agent-management/port-mcp-server/overview)
 connected. Load this skill with
@@ -34,8 +34,8 @@ tools below.
 
 Do **not** use for:
 
-- Mapping JQ / transform errors → `port-integrations` or `test_integration_mapping`
-- Missing entities / sync failures → `port-integrations` (`get_integration_sync_metrics`, `get_integration_event_logs`)
+- Mapping JQ / transform errors → [`port-integrations`](../SKILL.md) or `test_integration_mapping`
+- Missing entities / sync failures → [`port-integrations`](../SKILL.md) (`get_integration_sync_metrics`, `get_integration_event_logs`)
 
 ## Workflow
 
@@ -87,7 +87,7 @@ When complete, summarize:
 
 1. **Overall** — `status` and top-level `message` (if present on terminal states)
 2. **Per-check** — walk `results.testConnection` (nested tree of kinds/scopes → `{ status, message? }`)
-3. **Next steps** — auth/config fix if `failure`, or load `port-integrations` if connectivity is fine but data/sync is wrong
+3. **Next steps** — auth/config fix if `failure`, or load [`port-integrations`](../SKILL.md) if connectivity is fine but data/sync is wrong
 
 Check statuses inside `results.testConnection`:
 
